@@ -1,4 +1,37 @@
+#include <stdio.h>
+#include <stdarg.h>
 #include "main.h"
+
+/**
+ * print_binary - prints an unsigned int in binary format to stdout
+ * @args: variable arguments list
+ * @count: pointer to character count
+ */
+void print_binary(va_list args, int *count)
+{
+    unsigned int n = va_arg(args, unsigned int);
+    int binary[32], i = 0;
+
+    if (n == 0)
+    {
+        putchar('0');
+        (*count)++;
+        return;
+    }
+
+    while (n > 0)
+    {
+        binary[i] = n % 2;
+        n = n / 2;
+        i++;
+    }
+
+    for (i--; i >= 0; i--)
+    {
+        putchar(binary[i] + '0');
+        (*count)++;
+    }
+}
 
 /**
  * print_char - prints a single character to stdout
@@ -123,6 +156,9 @@ format++;
 
 switch (*format)
 {
+case 'b':
+print_binary(args, &count);
+break;
 case 'c':
 print_char(args, &count);
 break;
