@@ -24,13 +24,13 @@ putchar(c);
  */
 void print_string(va_list args, int *count)
 {
-        char *s = va_arg(args, char *);
+char *s = va_arg(args, char *);
 
-        for (; *s; s++)
-        {
-                putchar(*s);
-                (*count)++;
-        }
+for (; *s; s++)
+{
+putchar(*s);
+(*count)++;
+}
 }
 
 /**
@@ -39,8 +39,8 @@ void print_string(va_list args, int *count)
  */
 void print_percent(int *count)
 {
-        putchar('%');
-        (*count)++;
+putchar('%');
+(*count)++;
 }
 /**
  * print_decimal - prints a decimal number to stdout
@@ -49,44 +49,44 @@ void print_percent(int *count)
  */
 void print_decimal(va_list args, int *count)
 {
-  int temp, i, digit;
-        int n = va_arg(args, int);
-        int digits = 0;
+int temp, i, digit;
+int n = va_arg(args, int);
+int digits = 0;
 
-        if (n == 0)
-        {
-                putchar('0');
-                (*count)++;
-                return;
-        }
+if (n == 0)
+{
+putchar('0');
+(*count)++;
+return;
+}
 
-        if (n < 0)
-        {
-                putchar('-');
-                (*count)++;
-                n = -n;
-        }
+if (n < 0)
+{
+putchar('-');
+(*count)++;
+n = -n;
+}
 
-         temp = n;
-        while (temp != 0)
-        {
-                digits++;
-                temp /= 10;
-        }
+temp = n;
+while (temp != 0)
+{
+digits++;
+temp /= 10;
+}
 
-        while (digits > 0)
-        {
-                int divisor = 1;
-                for ( i = 1; i < digits; i++)
-                {
-                        divisor *= 10;
-                }
-                digit = n / divisor;
-                n %= divisor;
-                digits--;
-                putchar(digit + '0');
-                (*count)++;
-        }
+while (digits > 0)
+{
+int divisor = 1;
+for ( i = 1; i < digits; i++)
+{
+divisor *= 10;
+}
+digit = n / divisor;
+n %= divisor;
+digits--;
+putchar(digit + '0');
+(*count)++;
+}
 }
 
 /**
@@ -96,7 +96,7 @@ void print_decimal(va_list args, int *count)
  */
 void print_integer(va_list args, int *count)
 {
-        print_decimal(args, count);
+print_decimal(args, count);
 }
 /**
  * _printf - prints formatted output to stdout
