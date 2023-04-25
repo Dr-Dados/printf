@@ -8,9 +8,9 @@
  */
 int _printf(const char *format, ...)
 {
-	int s = 0;
+	int sum = 0;
 	va_list ap;
-	char *p, *st;
+	char *p, *start;
 	params_t params = PARAMS_INIT;
 
 	va_start(ap, format);
@@ -24,10 +24,10 @@ int _printf(const char *format, ...)
 		init_params(&params, ap);
 		if (*p != '%')
 		{
-			s += _putchar(*p);
+			sum += _putchar(*p);
 			continue;
 		}
-		st = p;
+		start = p;
 		p++;
 		while (get_flag(p, &params)) /* while char at p is flag char */
 		{
@@ -45,6 +45,6 @@ int _printf(const char *format, ...)
 	}
 	_putchar(BUF_FLUSH);
 	va_end(ap);
-	return (s);
+	return (sum);
 }
 
