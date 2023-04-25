@@ -1,42 +1,45 @@
 #include <stdarg.h>
-#include <stdlib.h>
-#include "main.h"
 #include <stdio.h>
+#include "main.h"
 
 int _printf(const char *format, ...)
 {
- int count = 0;
- char *s;
-	va_list args;
-	va_start(args, format);
-	
-	for (; *format; format++)
-	{
-		if (*format != '%')
-		{
-			putchar(*format), count++;
-			continue;
-		}
+    va_list args;
+    int count = 0;
 
-		switch (*++format)
-		{
-			case 'c':
-				putchar(va_arg(args, int)), count++;
-				break;
-			case 's':
-				s = va_arg(args, char *); 
-				for (; *s; s++)
-					putchar(*s), count++;
-				break;
-			case '%':
-				putchar('%'), count++;
-				break;
-			default:
-				putchar('%'), putchar(*format), count += 2;
-		}
-	}
-	
-	va_end(args);
-	return count;
+    va_start(args, format);
+
+    while (*format) {
+        if (*format == '%') {
+            format++;
+            switch (*format) {
+                case 'c':
+                    count += putchar(va_arg(args, int));
+                    break;
+                case 's':
+                    count += printf("%s", va_arg(args, char *));
+                    break;
+                case '%':
+                    count += putchar('%');
+                    break;
+                case 'd':
+                case 'i':
+                    count += printf("%d", va_arg(args, int));
+                    break;
+                default:
+                    putchar('%');
+                    putchar(*format);
+                    count += 2;
+                    break;
+            }
+        } else {
+            putchar(*format);
+            count++;
+        }
+        format++;
+    }
+
+    va_end(args);
+    return count;
 }
 
