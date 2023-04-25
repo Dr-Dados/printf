@@ -11,7 +11,7 @@ void print_char(va_list args, int *count)
 {
 int c;
 
-c= va_arg(args, int);
+c = va_arg(args, int);
 
 putchar(c);
 (*count)++;
@@ -77,7 +77,7 @@ temp /= 10;
 while (digits > 0)
 {
 int divisor = 1;
-for ( i = 1; i < digits; i++)
+for (i = 1; i < digits; i++)
 {
 divisor *= 10;
 }
@@ -98,6 +98,7 @@ void print_integer(va_list args, int *count)
 {
 print_decimal(args, count);
 }
+
 /**
  * _printf - prints formatted output to stdout
  * @format: format string
@@ -109,43 +110,42 @@ int _printf(const char *format, ...)
 int count = 0;
 va_list args;
 
-        va_start(args, format);
+va_start(args, format);
 
+for (; *format; format++)
+{
+if (*format != '%')
+{
+putchar(*format);
+count++;
+continue;
+}
 
-        for (; *format; format++)
-        {
-                if (*format != '%')
-                {
-                        putchar(*format);
-                        count++;
-                        continue;
-                }
+format++;
 
-                format++;
+switch (*format)
+{
+case 'c':
+print_char(args, &count);
+break;
+case 's':
+print_string(args, &count);
+break;
+case '%':
+print_percent(&count);
+break;
+case 'd':
+case 'i':
+print_integer(args, &count);
+break;
+default:
+putchar('%');
+putchar(*format);
+count += 2;
+break;
+}
+}
 
-                switch (*format)
-                {
-                        case 'c':
-                                print_char(args, &count);
-                                break;
-                        case 's':
-                                print_string(args, &count);
-                                break;
-                        case '%':
-                                print_percent(&count);
-                                break;
-				case 'd':
-        case 'i':
-                print_integer(args, &count);
-                break;
-                        default:
-                                putchar('%');
-                                putchar(*format);
-                                count += 2;
-                                break;
-                }
-        }
-
-        va_end(args);
+va_end(args);
 return (count);
 }
